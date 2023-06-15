@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    new Rigidbody2D rigid;
+    Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer sprite;
     [SerializeField] float maxSpeed;
+    [SerializeField] float jumpPower;
+    [SerializeField] float distance;
     Vector2 dir;
+    [SerializeField] LayerMask Ground;
+
 
     private void Awake()
     {
@@ -17,15 +21,18 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
     }
 
+    private void Start()
+    {
+        StartCoroutine("Jump");
+    }
+
     private void FixedUpdate()
     {
-        Move();
-
+        MoveAndJump();
     }
 
     private void Update()
     {
-
         if (Mathf.Abs(rigid.velocity.x) > 0.3f)
             anim.SetBool("isRun", true);
         else
@@ -41,22 +48,43 @@ public class Player : MonoBehaviour
             sprite.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
 
+        LandingGround();
+
     }
 
-    void Move()
+    void MoveAndJump()
     {
         float x = Input.GetAxisRaw("Horizontal");
 
         rigid.AddForce(Vector2.right * x, ForceMode2D.Impulse);
 
-
-
-        if (rigid.velocity.x > maxSpeed)
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
-        else if (rigid.velocity.x < -maxSpeed) 
-            rigid.velocity = new Vector2(-maxSpeed, rigid.velocity.y);
-
-        Debug.Log(rigid.velocity.x);
+        if (rigid.velocity.x > maxSpeed)                               
+            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);  
+        else if (rigid.velocity.x < -maxSpeed)                         
+            rigid.velocity = new Vector2(-maxSpeed, rigid.velocity.y); 
+    }                                                                                               
+                                                                                                    
+    void LandingGround()                                                                            
+    {                                                                                               
+        Debug.DrawRay(transform.position, Vector2.down, Color.red, distance);
+        bool raycastHit = Physics2D.Raycast(transform.position, Vector2.down, distance, Ground);
+        if (raycastHit)
+        {
+            anim.SetBool("isJump", false);
+        }
     }
 
+    IEnumerator Jump()                                                                                
+    {                                                                                                 
+        while (true)                                                                                  
+        {                                                                                             
+            if (Input.GetKeyDown(KeyCode.W) && !anim.GetBool("isJump"))                               
+            {                                                                                         
+                rigid.AddForce(Vector2.up.normalized * jumpPower, ForceMode2D.Impulse);               
+                anim.SetBool("isJump", true);                                                                                                                    //오민교 대장게이
+                yield return null;                                                                    
+            }                                                                                         
+            yield return null;
+        }
+    }
 }
