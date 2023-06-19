@@ -22,7 +22,7 @@ public class DangerWater : MonoBehaviour
         //플레이어 태그
         if (collision.CompareTag("Player"))
         {
-            collision.GetComponent<Player_Move>().Die();
+            //collision.GetComponent<Player_Move>().Die();
         }
     }
 
