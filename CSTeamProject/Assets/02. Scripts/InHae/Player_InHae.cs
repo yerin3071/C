@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player_InHae : MonoBehaviour
 {
     Rigidbody2D rigid;
     Animator anim;
@@ -13,12 +13,11 @@ public class Player : MonoBehaviour
     Vector2 dir;
     [SerializeField] LayerMask Ground;
 
-
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
+         sprite = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -28,7 +27,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MoveAndJump();
+        Move();
     }
 
     private void Update()
@@ -48,11 +47,11 @@ public class Player : MonoBehaviour
             sprite.flipX = Input.GetAxisRaw("Horizontal") == -1;
         }
 
-        LandingGround();
-
+        if(rigid.velocity.y<0)
+            LandingGround();
     }
 
-    void MoveAndJump()
+    void Move()
     {
         float x = Input.GetAxisRaw("Horizontal");
 
@@ -65,10 +64,9 @@ public class Player : MonoBehaviour
     }                                                                                               
                                                                                                     
     void LandingGround()                                                                            
-    {                                                                                               
+    {
         Debug.DrawRay(transform.position, Vector2.down, Color.red, distance);
-        bool raycastHit = Physics2D.Raycast(transform.position, Vector2.down, distance, Ground);
-        if (raycastHit)
+        if (Physics2D.Raycast(transform.position, Vector2.down, distance, Ground))
         {
             anim.SetBool("isJump", false);
         }
@@ -78,10 +76,10 @@ public class Player : MonoBehaviour
     {                                                                                                 
         while (true)                                                                                  
         {                                                                                             
-            if (Input.GetKeyDown(KeyCode.W) && !anim.GetBool("isJump"))                               
+            if (Input.GetKeyDown(KeyCode.W) && !anim.GetBool("isJump"))                           
             {                                                                                         
-                rigid.AddForce(Vector2.up.normalized * jumpPower, ForceMode2D.Impulse);               
-                anim.SetBool("isJump", true);                                                                                                                    //오민교 대장게이
+                rigid.AddForce(Vector2.up.normalized * jumpPower, ForceMode2D.Impulse);
+                anim.SetBool("isJump", true);
                 yield return null;                                                                    
             }                                                                                         
             yield return null;
