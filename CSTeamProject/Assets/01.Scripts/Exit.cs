@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
+    [SerializeField] bool isfirstExit;
     public GameObject player1;
     public GameObject player2;
     public string nextLevelName;
