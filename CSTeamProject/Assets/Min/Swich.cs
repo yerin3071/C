@@ -24,8 +24,9 @@ public class Swich : MonoBehaviour
         {
             for(int i =0; i < 100; i++)
             {
-                DangerWater1.transform.localScale -= new Vector3(0, 0.01f, 0);
-               StartCoroutine(DelayTime());
+                Destroy(DangerWater1.gameObject);
+               // DangerWater1.transform.localScale -= new Vector3(0, 0.01f, 0);
+              
             }
 
 
