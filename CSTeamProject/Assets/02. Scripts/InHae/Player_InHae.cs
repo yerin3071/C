@@ -10,14 +10,15 @@ public class Player_InHae : MonoBehaviour
     [SerializeField] float maxSpeed;
     [SerializeField] float jumpPower;
     [SerializeField] float distance;
-    Vector2 dir;
     [SerializeField] LayerMask Ground;
+
+    public bool playerDie;
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-         sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     private void Start()
@@ -27,28 +28,35 @@ public class Player_InHae : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if(!playerDie && !_GameManager.instance.isGameOver)
+            Move();
     }
 
     private void Update()
     {
-        if (Mathf.Abs(rigid.velocity.x) > 0.3f)
-            anim.SetBool("isRun", true);
-        else
-            anim.SetBool("isRun", false);
-
-        if (Input.GetButtonUp("Horizontal"))
+        if (!playerDie && !_GameManager.instance.isGameOver)
         {
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.01f, rigid.velocity.y);
-        }
+            if (Mathf.Abs(rigid.velocity.x) > 0.3f)
+                anim.SetBool("isRun", true);
+            else
+                anim.SetBool("isRun", false);
 
-        if (Input.GetButton("Horizontal"))
-        {
-            sprite.flipX = Input.GetAxisRaw("Horizontal") == -1;
-        }
+            if (Input.GetButtonUp("Horizontal"))
+            {
+                rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.01f, rigid.velocity.y);
+            }
 
-        if(rigid.velocity.y<0)
-            LandingGround();
+            if (Input.GetButton("Horizontal"))
+            {
+                sprite.flipX = Input.GetAxisRaw("Horizontal") == -1;
+            }
+
+            if (rigid.velocity.y < 0)
+                LandingGround();
+            else if (rigid.velocity.y == 0 && anim.GetBool("isJump"))
+                LandingGround();
+
+        }
     }
 
     void Move()
@@ -70,7 +78,7 @@ public class Player_InHae : MonoBehaviour
         {
             anim.SetBool("isJump", false);
         }
-    }
+    }   
 
     IEnumerator Jump()                                                                                
     {                                                                                                 
@@ -84,5 +92,16 @@ public class Player_InHae : MonoBehaviour
             }                                                                                         
             yield return null;
         }
+    }
+
+    public void dieEvent()
+    {
+        _GameManager.instance.GameOver();
+    }
+
+    public void Die()
+    {
+        playerDie = true;
+        anim.SetTrigger("isDie");
     }
 }
