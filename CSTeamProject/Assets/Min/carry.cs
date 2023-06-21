@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class carry : MonoBehaviour
 {
-    [SerializeField] Transform Player1;
+    [SerializeField] GameObject Player1;
     bool carryon = false;
-    void Start()
-    {
-        Player1 = GetComponent<Transform>();
-       
-    }
-
+    
     
     void Update()
     {
-        
+      if(carryon == true)          
+        transform.position = Player1.transform.position + new Vector3(0,1,0) ;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
@@ -26,11 +22,14 @@ public class carry : MonoBehaviour
             {
                 if(carryon == false)
                 {
-                        transform.position = Player1.position + new Vector3(0, 2, 0);
                         carryon = true;
                 }
-                else
-                transform.position = Player1.position + new Vector3(1, 0, 0);
+
+                else if(carryon == true)
+                {
+                    transform.position = Player1.transform.position + new Vector3(2, 0, 0);
+                    carryon = false;
+                }
 
             }
 
