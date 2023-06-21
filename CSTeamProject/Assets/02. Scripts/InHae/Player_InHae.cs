@@ -73,9 +73,11 @@ public class Player_InHae : MonoBehaviour
                                                                                                     
     void LandingGround()                                                                            
     {
+        anim.SetBool("isFall", true);
         Debug.DrawRay(transform.position, Vector2.down, Color.red, distance);
         if (Physics2D.Raycast(transform.position, Vector2.down, distance, Ground))
         {
+            anim.SetBool("isFall", false);
             anim.SetBool("isJump", false);
         }
     }   
