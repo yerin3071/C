@@ -11,11 +11,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - TileMap
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Fish
   - 
   - 
   - 

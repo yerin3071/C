@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 25b3278bd89164f0cafa6da2b6ae817f
+guid: 5e8c7ae5e48c55d4ca1d6c7f3190721e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,11 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 1
   spritePivot: {x: 0.5, y: 0.5}
+<<<<<<<< HEAD:CSTeamProject/Assets/02.Sprites/GrottoEscape2/GrottoEscape2Artwork/animated-tiles/water/_0000_Layer-1.png.meta
   spritePixelsToUnits: 12
+========
+  spritePixelsToUnits: 25
+>>>>>>>> InHae:CSTeamProject/Assets/03. Sprites/GrottoEscape2/GrottoEscape2Artwork/animated-tiles/water/_0000_Layer-1.png.meta
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
