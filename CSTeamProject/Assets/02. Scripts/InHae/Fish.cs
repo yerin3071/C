@@ -11,7 +11,8 @@ public class Fish : MonoBehaviour
     [SerializeField] float distance;
     [SerializeField] LayerMask Water;
     private bool isWater;
-    private bool isDie;
+        
+    public bool fishDie;
 
     private void Awake()
     {
@@ -22,13 +23,13 @@ public class Fish : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isWater == true) 
+        if (isWater && !_GameManager.instance.isGameOver) 
             Move();
     }
 
     private void Update()
     {
-        if (!isDie)
+        if (!fishDie && !_GameManager.instance.isGameOver)
         {
             if (Mathf.Abs(rigid.velocity.x) > 0.3f)
                 anim.SetBool("isRun", true);
@@ -87,9 +88,14 @@ public class Fish : MonoBehaviour
         }
     }
 
+    public void dieEvent()
+    {
+        _GameManager.instance.GameOver();
+    }
+
     void Die()
     {
-        isDie = true;
+        fishDie = true;
         anim.SetTrigger("isDie");
     }
 }
