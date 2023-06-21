@@ -24,6 +24,11 @@ public class DangerWater : MonoBehaviour
         {
             collision.GetComponent<Player_InHae>().Die();
         }
+
+        if (collision.CompareTag("Player2"))
+        {
+            collision.GetComponent<Fish>().Die();
+        }
     }
 
    
