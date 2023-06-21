@@ -7,8 +7,11 @@ public class Fish : MonoBehaviour
     Rigidbody2D rigid;
     Animator anim;
     SpriteRenderer sprite;
-    Vector2 dir;
     [SerializeField] float maxSpeed;
+    [SerializeField] float distance;
+    [SerializeField] LayerMask Water;
+    private bool isWater;
+    private bool isDie;
 
     private void Awake()
     {
@@ -19,24 +22,30 @@ public class Fish : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (isWater == true) 
+            Move();
     }
 
     private void Update()
     {
-        if (Mathf.Abs(rigid.velocity.x) > 0.3f)
-            anim.SetBool("isRun", true);
-        else
-            anim.SetBool("isRun", false);
-
-        if (Input.GetButtonUp("Horizontal2"))
+        if (!isDie)
         {
-            rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.01f, rigid.velocity.y);
-        }
+            if (Mathf.Abs(rigid.velocity.x) > 0.3f)
+                anim.SetBool("isRun", true);
+            else
+                anim.SetBool("isRun", false);
 
-        if (Input.GetButton("Horizontal2"))
-        {
-            sprite.flipX = Input.GetAxisRaw("Horizontal2") == -1;
+            if (Input.GetButtonUp("Horizontal2"))
+            {
+                rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.01f, rigid.velocity.y);
+            }
+
+            if (Input.GetButton("Horizontal2"))
+            {
+                sprite.flipX = Input.GetAxisRaw("Horizontal2") == -1;
+            }
+
+            ExitWater();
         }
     }
 
@@ -44,13 +53,43 @@ public class Fish : MonoBehaviour
     void Move()
     {
         float x = Input.GetAxisRaw("Horizontal2");
+        float y = Input.GetAxisRaw("Vertical2");
 
-        rigid.AddForce(Vector2.right * x, ForceMode2D.Impulse);
-
+        rigid.velocity = new Vector3(x, y, 0);
+        rigid.velocity *= maxSpeed;
+        
         if (rigid.velocity.x > maxSpeed)
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
         else if (rigid.velocity.x < -maxSpeed)
             rigid.velocity = new Vector2(-maxSpeed, rigid.velocity.y);
     }
 
+    void ExitWater()
+    {
+        Debug.DrawRay(transform.position, Vector2.down, Color.red, distance);
+        if (!Physics2D.Raycast(transform.position, Vector2.down, distance, Water))
+        {
+            rigid.gravityScale = 2f;
+            isWater = false;
+        }
+        else
+        {
+            rigid.gravityScale = 0;
+            isWater = true;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground") && !isWater)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        isDie = true;
+        anim.SetTrigger("isDie");
+    }
 }
