@@ -70,6 +70,7 @@ public class Fish : MonoBehaviour
         Debug.DrawRay(transform.position, Vector2.down, Color.red, distance);
         if (!Physics2D.Raycast(transform.position, Vector2.down, distance, Water))
         {
+            Debug.Log(Physics2D.Raycast(transform.position, Vector2.down, distance, Water));
             rigid.gravityScale = 2f;
             isWater = false;
         }
@@ -93,7 +94,7 @@ public class Fish : MonoBehaviour
         _GameManager.instance.GameOver();
     }
 
-    void Die()
+    public void Die()
     {
         fishDie = true;
         anim.SetTrigger("isDie");
