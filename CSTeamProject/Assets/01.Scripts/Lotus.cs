@@ -8,7 +8,15 @@ public class Lotus : MonoBehaviour
     private bool isSinking;
     private float sinkingSpeed = 0.6f;
 
-    private void Start()
+    public bool IsSinking => isSinking;
+
+    public float SinkingSpeed
+    {
+        get { return sinkingSpeed; }
+        set { sinkingSpeed = value; }
+    }
+
+    private void Awake()
     {
         originalPosition = transform.position;
     }
@@ -18,7 +26,6 @@ public class Lotus : MonoBehaviour
         if (other.CompareTag("Player1"))
         {
             isSinking = true;
-
             Invoke("Sink", 3f);
         }
     }
@@ -26,7 +33,7 @@ public class Lotus : MonoBehaviour
     private void Sink()
     {
         LeanTween.moveY(gameObject, originalPosition.y - 1f, sinkingSpeed);
-            Invoke("Rise", 5f);
+        Invoke("Rise", 5f);
     }
 
     private void Rise()
