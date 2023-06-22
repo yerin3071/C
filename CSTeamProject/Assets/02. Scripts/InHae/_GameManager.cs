@@ -13,7 +13,32 @@ public class _GameManager : MonoBehaviour
     private float time = 120f;
     private int stageIndex=1;
 
+    AudioSource audio;
+
+    [SerializeField] AudioClip stageBgm;
+    [SerializeField] AudioClip clearBgm;
+
     [SerializeField] GameObject gameOverPanel;
+
+    
+    private void Awake()
+    {
+        if (instance != null)
+            Destroy(gameObject);
+        instance = this;
+    }
+
+    public void AudioPlay()
+    {
+        audio.Stop();
+        audio.clip = clearBgm;
+        audio.Play();
+    }
+
+    public void GameClear()
+    {
+        AudioPlay();
+    }
 
     public int StageIndex
     {
@@ -41,12 +66,6 @@ public class _GameManager : MonoBehaviour
             GameOver();
     }
 
-    private void Awake()
-    {
-        if (instance != null)
-            Destroy(gameObject);
-        instance = this;
-    }
 
     public void GameOver()
     {
