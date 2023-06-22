@@ -9,12 +9,41 @@ public class _GameManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timeText;
     public static _GameManager instance = null;
-    Player_InHae player;
-    Fish fish;
     public bool isGameOver;
     private float time = 120f;
+    private int stageIndex=1;
+
+    AudioSource audio;
+
+    [SerializeField] AudioClip stageBgm;
+    [SerializeField] AudioClip clearBgm;
 
     [SerializeField] GameObject gameOverPanel;
+
+    
+    private void Awake()
+    {
+        if (instance != null)
+            Destroy(gameObject);
+        instance = this;
+    }
+
+    public void AudioPlay()
+    {
+        audio.Stop();
+        audio.clip = clearBgm;
+        audio.Play();
+    }
+
+    public void GameClear()
+    {
+        AudioPlay();
+    }
+
+    public int StageIndex
+    {
+        get => stageIndex; set => stageIndex = Mathf.Clamp(value, 1, 2);
+    }
 
     private void Update()
     {
@@ -37,12 +66,6 @@ public class _GameManager : MonoBehaviour
             GameOver();
     }
 
-    private void Awake()
-    {
-        if (instance != null)
-            Destroy(gameObject);
-        instance = this;
-    }
 
     public void GameOver()
     {
@@ -52,7 +75,7 @@ public class _GameManager : MonoBehaviour
 
     public void Restart()
     {
-        
+        SceneManager.LoadScene(stageIndex);
     }
 
 
