@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class Exit : MonoBehaviour
 {
-    public string nextLevelName;
     public static bool player1InExit = false;
     public static bool player2InExit = false;
 
@@ -39,6 +38,6 @@ public class Exit : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(nextLevelName);
+        SceneManager.LoadScene(_GameManager.instance.StageIndex);
     }
 }

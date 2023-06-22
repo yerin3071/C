@@ -11,8 +11,14 @@ public class _GameManager : MonoBehaviour
     public static _GameManager instance = null;
     public bool isGameOver;
     private float time = 120f;
+    private int stageIndex=1;
 
     [SerializeField] GameObject gameOverPanel;
+
+    public int StageIndex
+    {
+        get => stageIndex; set => stageIndex = Mathf.Clamp(value, 1, 2);
+    }
 
     private void Update()
     {
@@ -50,7 +56,7 @@ public class _GameManager : MonoBehaviour
 
     public void Restart()
     {
-        
+        SceneManager.LoadScene(stageIndex);
     }
 
 

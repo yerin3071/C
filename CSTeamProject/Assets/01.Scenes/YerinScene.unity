@@ -18399,9 +18399,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7e052a7057825a459ce12cc882faece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevelName: nextLevelName
-  player1InExit: 0
-  player2InExit: 0
 --- !u!1 &1321083669
 GameObject:
   m_ObjectHideFlags: 0
@@ -27615,9 +27612,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adce275ac66c2564dae5c9e11ea1ee5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevelName: nextLevelName
-  player1InExit: 0
-  player2InExit: 0
 --- !u!61 &2120136948
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -31,6 +31,7 @@ public class E1 : Exit
     }
     private void LoadNextLevel()
     {
-        SceneManager.LoadScene(nextLevelName);
+        _GameManager.instance.StageIndex++;
+        SceneManager.LoadScene(_GameManager.instance.StageIndex);
     }
 }
