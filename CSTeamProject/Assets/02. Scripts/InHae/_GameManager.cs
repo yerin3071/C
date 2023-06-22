@@ -9,8 +9,6 @@ public class _GameManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI timeText;
     public static _GameManager instance = null;
-    Player_InHae player;
-    Fish fish;
     public bool isGameOver;
     private float time = 120f;
 
