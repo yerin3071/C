@@ -6,10 +6,11 @@ using UnityEngine;
 public class Swich : MonoBehaviour
 {
     public GameObject DangerWater1;
-    
+    private SpriteRenderer spr;
+    public Sprite changeimage;
     void Start()
     {
-      
+        spr = GetComponent<SpriteRenderer>();
     }
 
     
@@ -20,10 +21,11 @@ public class Swich : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player2") || collision.CompareTag("Player1"))
         {
             for(int i =0; i < 100; i++)
             {
+                spr.sprite = changeimage;
                 Destroy(DangerWater1.gameObject);
                // DangerWater1.transform.localScale -= new Vector3(0, 0.01f, 0);
               

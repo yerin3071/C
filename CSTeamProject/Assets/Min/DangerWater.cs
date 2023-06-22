@@ -20,7 +20,7 @@ public class DangerWater : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //플레이어 태그
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Player1"))
         {
             collision.GetComponent<Player_InHae>().Die();
         }
