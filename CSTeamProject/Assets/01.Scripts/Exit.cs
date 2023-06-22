@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,41 +7,38 @@ using UnityEngine.SceneManagement;
 public class Exit : MonoBehaviour
 {
     public string nextLevelName;
-    public bool player1InExit = false;
-    public bool player2InExit = false;
+    public static bool player1InExit = false;
+    public static bool player2InExit = false;
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("Player1"))
         {
             player1InExit = true;
-        }
-        if (collision.CompareTag("Player2"))
-        {
-            player2InExit = true;
-        }
-
-        if (player1InExit && player2InExit)
-        {
-            LoadNextLevel();
+            Debug.Log( "플레이어 1 불값"+player1InExit);
+            CheckBothPlayersInExit();
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player1"))
         {
             player1InExit = false;
         }
-        if (collision.CompareTag("Player2"))
+    }
+
+    public void CheckBothPlayersInExit()
+    {
+        if (player1InExit == true && player2InExit == true)
         {
-            player2InExit = false;
+            Debug.Log("문이 열려요!");
+            LoadNextLevel();
         }
     }
+
     private void LoadNextLevel()
     {
         SceneManager.LoadScene(nextLevelName);
     }
 }
-
-
